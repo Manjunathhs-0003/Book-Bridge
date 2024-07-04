@@ -10,7 +10,7 @@ const BooksPage = () => {
         const booksData = await fetchBooks();
         setBooks(booksData);
       } catch (error) {
-        console.error('Error in fetching books:', error);
+        console.error('Error in fetching bookssss:', error);
       }
     };
 
