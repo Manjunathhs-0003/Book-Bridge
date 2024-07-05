@@ -46,9 +46,11 @@ app.use(session({
 // API routes
 const bookRoutes = require('./routes/bookRoutes');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes'); // Ensure this is included
 
 app.use('/api/books', bookRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes); // Register user routes
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/build')));

@@ -9,10 +9,14 @@ const AddBookPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addBook({ title, author });
+      const response = await addBook({ title, author });
       setMessage('Book added successfully');
     } catch (error) {
-      setMessage('Failed to add book');
+      if (error.response && error.response.status === 400) {
+        setMessage('Book already exists');
+      } else {
+        setMessage('Failed to add book');
+      }
     }
   };
 

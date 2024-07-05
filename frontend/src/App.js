@@ -4,7 +4,9 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import AddBookPage from './pages/AddBookPage';
 import BooksPage from './pages/BooksPage';
+import BookDetailsPage from './pages/BookDetailsPage';
 import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage';
 import NavBar from './components/NavBar';
 
 const App = () => {
@@ -17,6 +19,8 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/add-book" element={<AddBookPage />} />
         <Route path="/books" element={<BooksPage />} />
+        <Route path="/books/:id" element={<BookDetailsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

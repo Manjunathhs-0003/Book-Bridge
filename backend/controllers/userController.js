@@ -64,3 +64,19 @@ exports.logoutUser = (req, res) => {
     res.status(200).json({ message: 'User logged out successfully' });
   });
 };
+
+// Get user profile
+exports.getUserProfile = async (req, res) => {
+  try {
+    console.log('User ID:', req.session.userId);  // Log user ID
+    const user = await User.findById(req.session.userId).populate('books');
+    console.log('User:', user);  // Log user details
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error:', error);  // Log error details
+    res.status(500).json({ message: 'Error fetching user profile', error });
+  }
+};
