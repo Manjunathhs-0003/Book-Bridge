@@ -1,21 +1,28 @@
+// frontend/src/pages/BooksPage.js
 import React, { useEffect, useState } from 'react';
 import { fetchBooks } from '../api/bookApi';
 
 const BooksPage = () => {
   const [books, setBooks] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getBooks = async () => {
       try {
         const booksData = await fetchBooks();
-        setBooks(booksData);
+        setBooks(booksData); // Assuming fetchBooks returns an array of books
       } catch (error) {
-        console.error('Error in fetching bookssss:', error);
+        console.error('Error fetching books:', error);
+        setError('Error fetching books');
       }
     };
 
     getBooks();
   }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>

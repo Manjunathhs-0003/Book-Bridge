@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchBooks } from '../api/bookApi';
 
 const BookListPage = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const { data } = await axios.get('/api/books');
-      setBooks(data);
+    const getBooks = async () => {
+      try {
+        const booksData = await fetchBooks();
+        setBooks(booksData);
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
     };
 
-    fetchBooks();
+    getBooks();
   }, []);
 
   return (
     <div>
-      <h1>Available Books</h1>
+      <h1>List of Books</h1>
       <ul>
         {books.map((book) => (
           <li key={book._id}>{book.title} by {book.author}</li>

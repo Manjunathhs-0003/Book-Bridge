@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -19,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // API routes
 const bookRoutes = require('./routes/bookRoutes');
@@ -30,7 +28,7 @@ app.use('/api/users', userRoutes);
 
 // Serve React build files
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname+'/frontend/build/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
