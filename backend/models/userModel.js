@@ -8,16 +8,21 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
-  books: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Book',
-  }],
+  contactDetails: {
+    email: { type: String },
+    phone: { type: String },
+    address: { type: String },
+  },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
 });
 
 module.exports = mongoose.model('User', userSchema);

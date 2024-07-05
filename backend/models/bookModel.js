@@ -27,10 +27,10 @@ const bookSchema = new mongoose.Schema({
     date: { type: Date },
     location: { type: String },
   },
-  genre: { // new field
+  description: {
     type: String,
   },
-  description: { // new field
+  genre: {
     type: String,
   },
 });

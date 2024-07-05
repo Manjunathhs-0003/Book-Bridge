@@ -100,3 +100,20 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Error fetching user profile', error });
   }
 };
+
+// Controller to update user contact details
+exports.updateContactDetails = async (req, res) => {
+  const { email, phone, address } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.session.userId,
+      {
+        contactDetails: { email, phone, address },
+      },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating contact details', error });
+  }
+};  

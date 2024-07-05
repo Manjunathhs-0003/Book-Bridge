@@ -18,7 +18,10 @@ router.put('/update', authMiddleware, bookController.updateBookAvailability);
 // Update contact and meetup details
 router.put('/contact-meetup', authMiddleware, bookController.updateContactMeetupDetails);
 
-// Get logged-in user profile
-router.get('/profile', authMiddleware, userController.getUserProfile);
+// Update an existing book
+router.put('/update-book', authMiddleware, bookController.updateBook);
 
-module.exports = router;
+// Delete a book
+router.delete('/delete-book', authMiddleware, bookController.deleteBook);
+
+module.exports = router;    
