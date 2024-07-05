@@ -1,15 +1,15 @@
-// backend/routes/bookRoutes.js
-
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path as needed
-const { createBook, getBooks, updateBookAvailability } = require('../controllers/bookController');
+const bookController = require('../controllers/bookController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// Example route handler
-router.get('/', getBooks);
+// Get all books
+router.get('/', bookController.getBooks);
 
-// Secure routes with auth middleware
-router.post('/add', authMiddleware, createBook);
-router.put('/update', authMiddleware, updateBookAvailability);
+// Create a new book
+router.post('/add', authMiddleware, bookController.createBook);
+
+// Update book availability
+router.put('/update', authMiddleware, bookController.updateBookAvailability);
 
 module.exports = router;

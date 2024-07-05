@@ -1,4 +1,3 @@
-// frontend/src/pages/BooksPage.js
 import React, { useEffect, useState } from 'react';
 import { fetchBooks } from '../api/bookApi';
 
@@ -10,9 +9,8 @@ const BooksPage = () => {
     const getBooks = async () => {
       try {
         const booksData = await fetchBooks();
-        setBooks(booksData); // Assuming fetchBooks returns an array of books
+        setBooks(booksData);
       } catch (error) {
-        console.error('Error fetching books:', error);
         setError('Error fetching books');
       }
     };
@@ -21,16 +19,20 @@ const BooksPage = () => {
   }, []);
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>{error}</div>;
   }
 
   return (
     <div>
       <h1>List of Books</h1>
       <ul>
-        {books.map((book) => (
-          <li key={book._id}>{book.title} by {book.author}</li>
-        ))}
+        {books.length > 0 ? (
+          books.map((book) => (
+            <li key={book._id}>{book.title} by {book.author}</li>
+          ))
+        ) : (
+          <li>No books available</li>
+        )}
       </ul>
     </div>
   );

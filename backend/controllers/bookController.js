@@ -1,47 +1,36 @@
-// backend/controllers/bookController.js
-
 const Book = require('../models/bookModel');
 
-// Create a new book
-const createBook = async (req, res) => {
-  const { title, author, description } = req.body;
-  const ownerId = req.user._id; // Assuming user ID is extracted from JWT token or session
-  const newBook = new Book({ title, author, description, owner: ownerId });
-
-  try {
-    const savedBook = await newBook.save();
-    res.status(201).json(savedBook);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Get all books
-const getBooks = async (req, res) => {
+// Controller to get all books
+exports.getBooks = async (req, res) => {
   try {
     const books = await Book.find();
-    console.log('Books:', books);  // Debugging log
     res.status(200).json(books);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Error fetching books', error });
   }
 };
 
-// Update book availability
-const updateBookAvailability = async (req, res) => {
-  const { bookId, available } = req.body;
+// Controller to create a new book
+exports.createBook = async (req, res) => {
   try {
-    const book = await Book.findById(bookId);
-    if (book) {
-      book.available = available;
-      const updatedBook = await book.save();
-      res.status(200).json(updatedBook);
-    } else {
-      res.status(404).json({ message: 'Book not found' });
-    }
+    const book = new Book(req.body);
+    await book.save();
+    res.status(201).json(book);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: 'Error creating book', error });
   }
 };
 
-module.exports = { createBook, getBooks, updateBookAvailability };
+// Controller to update book availability
+exports.updateBookAvailability = async (req, res) => {
+  try {
+    const { bookId, availability } = req.body;
+    const book = await Book.findByIdAndUpdate(bookId, { availability }, { new: true });
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating book', error });
+  }
+};

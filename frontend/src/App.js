@@ -1,24 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import HomePage from './pages/HomePage';
-import BooksPage from './pages/BooksPage';
-import AddBookPage from './pages/AddBookPage';
-import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import BookListPage from './pages/BookListPage';
+import LoginPage from './pages/LoginPage';
+import AddBookPage from './pages/AddBookPage';
+import BooksPage from './pages/BooksPage';
+import HomePage from './pages/HomePage';
+import NavBar from './components/NavBar';
 
 const App = () => {
   return (
     <Router>
       <NavBar />
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        <Route path="/books" element={<BooksPage />} />
-        <Route path="/add-book" element={<AddBookPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/book-list" element={<BookListPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/add-book" element={<AddBookPage />} />
+        <Route path="/books" element={<BooksPage />} />
       </Routes>
     </Router>
   );

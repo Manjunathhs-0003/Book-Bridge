@@ -2,6 +2,7 @@
 ```
 Book Swapping
 ├─ .DS_Store
+├─ README.md
 ├─ backend
 │  ├─ .env
 │  ├─ config
@@ -9,15 +10,20 @@ Book Swapping
 │  ├─ controllers
 │  │  ├─ bookController.js
 │  │  └─ userController.js
+│  ├─ middleware
+│  │  └─ authMiddleware.js
 │  ├─ models
-│  │  ├─ User.js
-│  │  └─ bookModel.js
+│  │  ├─ bookModel.js
+│  │  └─ userModel.js
 │  ├─ package-lock.json
 │  ├─ package.json
 │  ├─ routes
+│  │  ├─ authRoutes.js
 │  │  ├─ bookRoutes.js
 │  │  └─ userRoutes.js
-│  └─ server.js
+│  ├─ server.js
+│  └─ utils
+│     └─ authUtils.js
 └─ frontend
    ├─ README.md
    ├─ package-lock.json
@@ -34,8 +40,10 @@ Book Swapping
    │  ├─ api
    │  │  └─ bookApi.js
    │  ├─ components
+   │  │  ├─ BooksPage.js
    │  │  ├─ GradientBackground.js
    │  │  ├─ Herohighlight.js
+   │  │  ├─ HomePage.js
    │  │  └─ NavBar.js
    │  ├─ index.css
    │  ├─ index.js

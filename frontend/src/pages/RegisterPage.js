@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const RegisterPage = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -9,7 +10,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/api/users/register', { email, password });
+      await axios.post('http://localhost:3001/api/auth/register', { username, email, password }, { withCredentials: true });
       setMessage('Registration successful');
     } catch (error) {
       setMessage('Registration failed');
@@ -21,6 +22,15 @@ const RegisterPage = () => {
       <h1>Register</h1>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input 
+            type="text" 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+            required 
+          />
+        </div>
         <div>
           <label>Email:</label>
           <input 

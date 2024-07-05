@@ -9,9 +9,12 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/api/users/login', { email, password });
-      localStorage.setItem('token', response.data.token);
-      setMessage('Login successful');
+      const response = await axios.post('http://localhost:3001/api/auth/login', { email, password }, { withCredentials: true });
+      if (response.status === 200) {
+        setMessage('Login successful');
+      } else {
+        setMessage('Login failed');
+      }
     } catch (error) {
       setMessage('Login failed');
     }

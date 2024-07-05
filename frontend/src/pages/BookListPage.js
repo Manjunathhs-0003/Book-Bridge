@@ -1,3 +1,5 @@
+// frontend/src/pages/BookListPage.js
+
 import React, { useEffect, useState } from 'react';
 import { fetchBooks } from '../api/bookApi';
 
@@ -5,7 +7,7 @@ const BookListPage = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    const getBooks = async () => {
+    const fetchAllBooks = async () => {
       try {
         const booksData = await fetchBooks();
         setBooks(booksData);
@@ -14,15 +16,17 @@ const BookListPage = () => {
       }
     };
 
-    getBooks();
+    fetchAllBooks();
   }, []);
 
   return (
     <div>
-      <h1>List of Books</h1>
+      <h1>Book List</h1>
       <ul>
         {books.map((book) => (
-          <li key={book._id}>{book.title} by {book.author}</li>
+          <li key={book._id}>
+            {book.title} - {book.author}
+          </li>
         ))}
       </ul>
     </div>

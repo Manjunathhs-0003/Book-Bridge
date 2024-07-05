@@ -1,59 +1,66 @@
-const User = require('../models/User');
+const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 // Register a new user
-const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
-    const userExists = await User.findOne({ email });
-
-    if (userExists) {
-        return res.status(400).json({ message: 'User already exists' });
+exports.registerUser = async (req, res) => {
+  const { username, email, password } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: 'User already exists' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
-        name,
-        email,
-        password: hashedPassword
+    user = new User({
+      username,
+      email,
+      password: hashedPassword,
     });
 
-    try {
-        const savedUser = await user.save();
-        res.status(201).json({ 
-            _id: savedUser._id,
-            name: savedUser.name,
-            email: savedUser.email,
-            token: generateToken(savedUser._id)
-        });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+    await user.save();
+
+    // Set session data
+    req.session.userId = user._id;
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
 
 // Login user
-const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
     const user = await User.findOne({ email });
-
-    if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            token: generateToken(user._id)
-        });
-    } else {
-        res.status(400).json({ message: 'Invalid email or password' });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid email or password' });
     }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    // Set session data
+    req.session.userId = user._id;
+
+    res.status(200).json({ message: 'User logged in successfully' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Server error' });
+  }
 };
 
-// Generate JWT
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '30d'
-    });
+// Logout user
+exports.logoutUser = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Unable to logout' });
+    }
+    res.clearCookie('connect.sid');
+    res.status(200).json({ message: 'User logged out successfully' });
+  });
 };
-
-module.exports = { registerUser, loginUser };
