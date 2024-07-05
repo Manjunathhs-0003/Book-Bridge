@@ -27,6 +27,12 @@ const bookSchema = new mongoose.Schema({
     date: { type: Date },
     location: { type: String },
   },
+  genre: { // new field
+    type: String,
+  },
+  description: { // new field
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('Book', bookSchema);

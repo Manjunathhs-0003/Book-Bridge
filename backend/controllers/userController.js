@@ -65,18 +65,38 @@ exports.logoutUser = (req, res) => {
   });
 };
 
-// Get user profile
+// Controller to get user profile
 exports.getUserProfile = async (req, res) => {
   try {
-    console.log('User ID:', req.session.userId);  // Log user ID
+    if (!req.session || !req.session.userId) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
     const user = await User.findById(req.session.userId).populate('books');
-    console.log('User:', user);  // Log user details
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+
     res.status(200).json(user);
   } catch (error) {
-    console.error('Error:', error);  // Log error details
+    res.status(500).json({ message: 'Error fetching user profile', error });
+  }
+};
+
+// Controller to get logged-in user profile with their books
+exports.getUserProfile = async (req, res) => {
+  try {
+    if (!req.session || !req.session.userId) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    const user = await User.findById(req.session.userId).populate('books');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    res.status(200).json(user);
+  } catch (error) {
     res.status(500).json({ message: 'Error fetching user profile', error });
   }
 };

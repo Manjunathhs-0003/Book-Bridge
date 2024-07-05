@@ -9,10 +9,8 @@ const ProfilePage = () => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get('http://localhost:3001/api/users/profile', { withCredentials: true });
-        console.log('User Profile Data:', response.data); // Log response data
         setUser(response.data);
       } catch (error) {
-        console.error('API Error:', error); // Log API error
         setError('Error fetching user profile');
       }
     };
@@ -36,7 +34,11 @@ const ProfilePage = () => {
       <ul>
         {user.books.map(book => (
           <li key={book._id}>
-            {book.title} by {book.author} - {book.availability ? 'Available' : 'Not Available'}
+            <h3>{book.title}</h3>
+            <p>Author: {book.author}</p>
+            <p>Genre: {book.genre}</p>
+            <p>Description: {book.description}</p>
+            <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
           </li>
         ))}
       </ul>
