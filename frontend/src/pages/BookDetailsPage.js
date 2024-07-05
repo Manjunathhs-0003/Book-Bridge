@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from '../components/NavBar';
 
 const BookDetailsPage = () => {
   const { id } = useParams();
@@ -21,6 +22,7 @@ const BookDetailsPage = () => {
 
   return (
     <div>
+      <NavBar />
       <h1>{book.title}</h1>
       <p>Author: {book.author}</p>
       <p>Genre: {book.genre}</p>

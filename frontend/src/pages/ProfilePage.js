@@ -1,22 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import NavBar from '../components/NavBar';
+import { AuthContext } from '../contexts/AuthContext';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const { user: currentUser } = useContext(AuthContext);
+
+  const [contactDetails, setContactDetails] = useState({
+    email: '',
+    phone: '',
+    address: ''
+  });
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.get('http://localhost:3001/api/users/profile', { withCredentials: true });
         setUser(response.data);
+        setContactDetails(response.data.contactDetails || {});
       } catch (error) {
         setError('Error fetching user profile');
       }
     };
 
     fetchUserProfile();
-  }, []);
+  }, [currentUser]);
+
+  const handleContactDetailsChange = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put('http://localhost:3001/api/users/contact-details', contactDetails, { withCredentials: true });
+      setUser(response.data);
+      alert('Contact details updated successfully');
+    } catch (error) {
+      setError('Error updating contact details');
+    }
+  };
+
+  const handleBookUpdate = async (bookId, updatedData) => {
+    try {
+      const response = await axios.put('http://localhost:3001/api/books/update-book', { bookId, ...updatedData }, { withCredentials: true });
+      setUser(prevUser => ({
+        ...prevUser,
+        books: prevUser.books.map(book => book._id === bookId ? response.data : book)
+      }));
+      alert('Book updated successfully');
+    } catch (error) {
+      setError('Error updating book');
+    }
+  };
+
+  const handleBookDelete = async (bookId) => {
+    try {
+      await axios.delete('http://localhost:3001/api/books/delete-book', { data: { bookId } }, { withCredentials: true });
+      setUser(prevUser => ({
+        ...prevUser,
+        books: prevUser.books.filter(book => book._id !== bookId)
+      }));
+      alert('Book deleted successfully');
+    } catch (error) {
+      setError('Error deleting book');
+    }
+  };
 
   if (error) {
     return <div>{error}</div>;
@@ -28,17 +75,32 @@ const ProfilePage = () => {
 
   return (
     <div>
+      <NavBar />
       <h1>{user.username}'s Profile</h1>
       <p>Email: {user.email}</p>
-      <h2>Your Books</h2>
+      
+      <h2>Update Contact Details</h2>
+      <form onSubmit={handleContactDetailsChange}>
+        <label>Email:</label>
+        <input type="email" value={contactDetails.email} onChange={(e) => setContactDetails({ ...contactDetails, email: e.target.value })} required />
+        <label>Phone:</label>
+        <input type="text" value={contactDetails.phone} onChange={(e) => setContactDetails({ ...contactDetails, phone: e.target.value })} required />
+        <label>Address:</label>
+        <input type="text" value={contactDetails.address} onChange={(e) => setContactDetails({ ...contactDetails, address: e.target.value })} required />
+        <button type="submit">Update Contact Details</button>
+      </form>
+
+      <h2>Your Books for Trading</h2>
       <ul>
         {user.books.map(book => (
           <li key={book._id}>
             <h3>{book.title}</h3>
             <p>Author: {book.author}</p>
-            <p>Genre: {book.genre}</p>
-            <p>Description: {book.description}</p>
             <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
+            <button onClick={() => handleBookUpdate(book._id, { title: book.title, author: book.author, availability: !book.availability })}>
+              {book.availability ? 'Mark as Unavailable' : 'Mark as Available'}
+            </button>
+            <button onClick={() => handleBookDelete(book._id)}>Delete</button>
           </li>
         ))}
       </ul>
