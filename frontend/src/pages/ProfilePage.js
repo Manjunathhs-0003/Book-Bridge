@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import NavBar from '../components/NavBar';
 import { AuthContext } from '../contexts/AuthContext';
+import { BackgroundBeams } from '../components/ui/background-beams';  // Ensure this import path is correct
+import NavBar from '../components/NavBar';
+import { motion } from 'framer-motion';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -74,36 +76,39 @@ const ProfilePage = () => {
   }
 
   return (
-    <div>
+    <div className="min-h-screen bg-black text-white flex flex-col">
       <NavBar />
-      <h1>{user.username}'s Profile</h1>
-      <p>Email: {user.email}</p>
-      
-      <h2>Update Contact Details</h2>
-      <form onSubmit={handleContactDetailsChange}>
-        <label>Email:</label>
-        <input type="email" value={contactDetails.email} onChange={(e) => setContactDetails({ ...contactDetails, email: e.target.value })} required />
-        <label>Phone:</label>
-        <input type="text" value={contactDetails.phone} onChange={(e) => setContactDetails({ ...contactDetails, phone: e.target.value })} required />
-        <label>Address:</label>
-        <input type="text" value={contactDetails.address} onChange={(e) => setContactDetails({ ...contactDetails, address: e.target.value })} required />
-        <button type="submit">Update Contact Details</button>
-      </form>
+      <BackgroundBeams />
+      <div className="container mx-auto p-4 text-center">
+        <h1>{user.username}'s Profile</h1>
+        <p>Email: {user.email}</p>
+        
+        <h2>Update Contact Details</h2>
+        <form onSubmit={handleContactDetailsChange}>
+          <label>Email:</label>
+          <input type="email" value={contactDetails.email} onChange={(e) => setContactDetails({ ...contactDetails, email: e.target.value })} required />
+          <label>Phone:</label>
+          <input type="text" value={contactDetails.phone} onChange={(e) => setContactDetails({ ...contactDetails, phone: e.target.value })} required />
+          <label>Address:</label>
+          <input type="text" value={contactDetails.address} onChange={(e) => setContactDetails({ ...contactDetails, address: e.target.value })} required />
+          <button type="submit">Update Contact Details</button>
+        </form>
 
-      <h2>Your Books for Trading</h2>
-      <ul>
-        {user.books.map(book => (
-          <li key={book._id}>
-            <h3>{book.title}</h3>
-            <p>Author: {book.author}</p>
-            <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
-            <button onClick={() => handleBookUpdate(book._id, { title: book.title, author: book.author, availability: !book.availability })}>
-              {book.availability ? 'Mark as Unavailable' : 'Mark as Available'}
-            </button>
-            <button onClick={() => handleBookDelete(book._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+        <h2>Your Books for Trading</h2>
+        <ul>
+          {user.books.map(book => (
+            <li key={book._id}>
+              <h3>{book.title}</h3>
+              <p>Author: {book.author}</p>
+              <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
+              <button onClick={() => handleBookUpdate(book._id, { title: book.title, author: book.author, availability: !book.availability })}>
+                {book.availability ? 'Mark as Unavailable' : 'Mark as Available'}
+              </button>
+              <button onClick={() => handleBookDelete(book._id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

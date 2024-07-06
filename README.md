@@ -36,12 +36,12 @@ Book Swapping
    │  ├─ robots.txt
    │  └─ static
    │     ├─ css
-   │     │  ├─ main.4d1f31b5.css
-   │     │  └─ main.4d1f31b5.css.map
+   │     │  ├─ main.c7395fdc.css
+   │     │  └─ main.c7395fdc.css.map
    │     └─ js
-   │        ├─ main.c36390cb.js
-   │        ├─ main.c36390cb.js.LICENSE.txt
-   │        └─ main.c36390cb.js.map
+   │        ├─ main.edccb280.js
+   │        ├─ main.edccb280.js.LICENSE.txt
+   │        └─ main.edccb280.js.map
    ├─ package-lock.json
    ├─ package.json
    ├─ public
@@ -56,8 +56,10 @@ Book Swapping
    │  ├─ api
    │  │  └─ bookApi.js
    │  ├─ components
+   │  │  ├─ Layout.js
    │  │  ├─ NavBar.js
    │  │  └─ ui
+   │  │     ├─ 3d-card.js
    │  │     ├─ background-beams.js
    │  │     ├─ floating-navbar.js
    │  │     ├─ hero-highlight.js
