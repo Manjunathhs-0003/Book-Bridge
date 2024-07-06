@@ -56,11 +56,10 @@ Book Swapping
    │  ├─ api
    │  │  └─ bookApi.js
    │  ├─ components
-   │  │  ├─ BooksPage.js
-   │  │  ├─ GradientBackground.js
-   │  │  ├─ Herohighlight.js
-   │  │  ├─ HomePage.js
-   │  │  └─ NavBar.js
+   │  │  ├─ NavBar.js
+   │  │  └─ ui
+   │  ├─ contexts
+   │  │  └─ AuthContext.js
    │  ├─ index.css
    │  ├─ index.js
    │  ├─ pages
@@ -68,6 +67,7 @@ Book Swapping
    │  │  ├─ BookDetailsPage.js
    │  │  ├─ BookListPage.js
    │  │  ├─ BooksPage.js
+   │  │  ├─ Dashboard.js
    │  │  ├─ HomePage.js
    │  │  ├─ LoginPage.js
    │  │  ├─ ProfilePage.js
