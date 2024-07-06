@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { HeroHighlight } from '../components/ui/hero-highlight';
 
 const HomePage = () => (
@@ -6,10 +7,24 @@ const HomePage = () => (
     <HeroHighlight>
       <div className="relative z-20 text-center px-4">
         <h1 className="text-4xl font-bold mt-12">Trade Books Effortlessly</h1>
-        <p className="text-lg mt-4">
+        <p className="text-lg mt-4 mb-8">
           Welcome to our Book Trading Platform, where you can easily swap books with a community of avid readers.
           Discover new titles, share your favorite books, and enjoy the numerous benefits of book swapping.
         </p>
+        <div className="flex justify-center space-x-4 mt-10">
+          <Link to="/login" className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              Login
+            </span>
+          </Link>
+          <Link to="/register" className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+              Register
+            </span>
+          </Link>
+        </div>
       </div>
     </HeroHighlight>
   </div>
