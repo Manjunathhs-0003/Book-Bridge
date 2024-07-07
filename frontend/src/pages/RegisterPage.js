@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
+import { BackgroundBeams } from '../components/ui/background-beams';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -24,9 +25,10 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
-      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900">
-        <h2 className="font-bold text-xl text-neutral-200">Welcome to Book Swapping Platform</h2>
+    <div className="min-h-screen flex items-center justify-center bg-black text-white relative">
+      <BackgroundBeams className="fixed inset-0 h-full w-full" />
+      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 relative z-10">
+        <h1 className="font-bold text-xl text-neutral-200">Welcome to Book Swapping Platform</h1>
         <p className="text-neutral-300 text-sm mt-2">
           Register to start trading books on our platform.
         </p>
@@ -43,24 +45,17 @@ const RegisterPage = () => {
             <Label htmlFor="password">Password:</Label>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
           </div>
-          <button className="p-[3px] relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-        <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+          <div className="flex justify-center">
+          <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+        <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+        <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-20 py-1 text-sm font-medium text-white backdrop-blur-3xl">
           Register
-        </div>
+        </span>
       </button>
+          </div>
         </form>
       </div>
     </div>
-  );
-};
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-    </>
   );
 };
 

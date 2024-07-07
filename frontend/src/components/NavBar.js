@@ -1,6 +1,6 @@
 import React from "react";
 import { FloatingNav } from "./ui/floating-navbar";
-import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
+import { IconHome, IconUser } from "@tabler/icons-react";
 import { useLocation } from "react-router-dom";
 
 const NavBar = () => {
@@ -11,16 +11,6 @@ const NavBar = () => {
       link: "/",
       icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
-    // {
-    //   name: "About",
-    //   link: "/about",
-    //   icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    // },
-    // {
-    //   name: "Contact",
-    //   link: "/contact",
-    //   icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    // },
     {
       name: "Dashboard",
       link: "/dashboard",
@@ -31,11 +21,6 @@ const NavBar = () => {
       link: "/profile",
       icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
-    // {
-    //   name: "Books",
-    //   link: "/books",
-    //   icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    // },
   ];
 
   // Exclude the FloatingNav on Home Page

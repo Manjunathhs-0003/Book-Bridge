@@ -5,7 +5,7 @@ import { BackgroundBeams } from '../components/ui/background-beams';
 import { FlipWords } from '../components/ui/flip-words';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
-import { HoverEffect, Card, CardTitle, CardDescription } from '../components/ui/card-hover-effect';
+import { HoverEffect } from '../components/ui/card-hover-effect';
 import { cn } from '../utils/cn';
 
 const ProfilePage = () => {
@@ -107,7 +107,7 @@ const ProfilePage = () => {
   }));
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex  items-center justify-center bg-black text-white">
       <BackgroundBeams className="fixed inset-0 z-0 h-full w-full" />
       <div className="relative z-10 container mx-auto p-4 text-center space-y-8">
         <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">

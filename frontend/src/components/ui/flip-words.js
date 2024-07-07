@@ -21,7 +21,9 @@ export const FlipWords = ({ words, duration = 3000, className }) => {
       }, duration);
   }, [isAnimating, duration, startAnimation]);
 
-  
+  // Calculate the maximum word length to set a fixed width
+  const maxWordLength = Math.max(...words.map(word => word.length));
+  const fixedWidth = `${maxWordLength}ch`; // Use ch unit to match character width
 
   return (
     <AnimatePresence
@@ -54,10 +56,11 @@ export const FlipWords = ({ words, duration = 3000, className }) => {
           position: "absolute",
         }}
         className={cn(
-          "z-10 inline-block relative text-left text-white dark:text-neutral-100 px-2",
+          "z-10 inline-block relative text-left text-white px-2",
           className
         )}
         key={currentWord}
+        style={{ width: fixedWidth }}
       >
         {currentWord.split("").map((letter, index) => (
           <motion.span
