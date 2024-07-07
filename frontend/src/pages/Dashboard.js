@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { HeroHighlight } from "../components/ui/hero-highlight";
-import NavBar from "../components/NavBar";
+// import NavBar from "../components/NavBar";
 import { motion } from "framer-motion";
 import { CardBody, CardContainer, CardItem } from "../components/ui/3d-card";
 
@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col">
-      <NavBar />
+      {/* <NavBar /> */}
       <HeroHighlight>
         {/* Assuming HeroHighlight has a background image or color */}
         <div className="container mx-auto p-4 text-center flex flex-col items-center justify-center flex-1">

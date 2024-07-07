@@ -34,11 +34,11 @@ const LoginPage = () => {
       
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email" text="Email Address" />
+          <Label htmlFor="email"> Email Address: </Label>
           <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="password" text="Password" />
+          <Label htmlFor="password"> Password: </Label>
           <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
         </LabelInputContainer>
 

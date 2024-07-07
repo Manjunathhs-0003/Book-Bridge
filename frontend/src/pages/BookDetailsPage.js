@@ -22,7 +22,7 @@ const BookDetailsPage = () => {
 
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <h1>{book.title}</h1>
       <p>Author: {book.author}</p>
       <p>Genre: {book.genre}</p>
