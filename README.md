@@ -21,6 +21,8 @@ Book Swapping
 │  │  ├─ authRoutes.js
 │  │  ├─ bookRoutes.js
 │  │  └─ userRoutes.js
+│  ├─ scripts
+│  │  └─ updateBooks.js
 │  ├─ server.js
 │  └─ utils
 │     └─ authUtils.js
@@ -62,11 +64,14 @@ Book Swapping
    │  │     ├─ 3d-card.js
    │  │     ├─ Card.js
    │  │     ├─ background-beams.js
+   │  │     ├─ book-card.js
+   │  │     ├─ card-hover-effect.js
    │  │     ├─ flip-words.js
    │  │     ├─ floating-navbar.js
    │  │     ├─ hero-highlight.js
    │  │     ├─ input.js
-   │  │     └─ label.js
+   │  │     ├─ label.js
+   │  │     └─ meteors.js
    │  ├─ contexts
    │  │  └─ AuthContext.js
    │  ├─ index.css

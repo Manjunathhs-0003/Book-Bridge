@@ -97,13 +97,18 @@ exports.updateBook = async (req, res) => {
 exports.deleteBook = async (req, res) => {
   const { bookId } = req.body;
   try {
-    await Book.findOneAndDelete({
+    const deletedBook = await Book.findOneAndDelete({
       _id: bookId,
-      owner: req.session.userId
+      owner: req.session.userId,
     });
-    
-    res.status(200).json({ message: 'Book deleted successfully' });
+
+    if (!deletedBook) {
+      return res.status(404).json({ message: 'Book not found or not authorized to delete' });
+    }
+
+    res.status(200).json({ message: 'Book deleted successfully', bookId: deletedBook._id });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting book', error });
+    console.error('Error deleting book:', error); // Log detailed message
+    res.status(500).json({ message: 'Error deleting book', error: error.message });
   }
 };

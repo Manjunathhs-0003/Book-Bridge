@@ -13,11 +13,26 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/api/books")
       .then(response => {
-        console.log(response.data); // Make sure response has `rating` and `details`
+        console.log(response.data); // Ensure response has `rating` and `details`
         setBooks(response.data);
       })
       .catch(error => console.error(error));
   }, []);
+
+  const handleBuyBook = async (bookId) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/api/books/${bookId}`, { withCredentials: true });
+      console.log('Fetched book details:', response.data); // Logging for debug
+
+      setBooks(prevBooks =>
+        prevBooks.map(book =>
+          book._id === bookId ? { ...book, ownerContact: response.data.owner.contactDetails } : book
+        )
+      );
+    } catch (error) {
+      console.error('Error fetching contact details:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -32,7 +47,7 @@ const Dashboard = () => {
             Explore the world of books and trading.
           </motion.h1>
           <InfoSection />
-          <BooksSection books={books} />
+          <BooksSection books={books} onBuyBook={handleBuyBook} />
         </div>
       </HeroHighlight>
     </div>
@@ -74,13 +89,13 @@ const InfoSection = () => {
   );
 };
 
-const BooksSection = ({ books }) => {
+const BooksSection = ({ books, onBuyBook }) => {
   return (
     <div className="mt-16 relative z-10">
       <h2 className="text-3xl font-bold mb-8">Books Available for Trading</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {books.map(book => (
-          <BookCard key={book._id} book={book} />
+          <BookCard key={book._id} book={book} onBuy={onBuyBook} />
         ))}
       </div>
     </div>

@@ -33,15 +33,21 @@ const store = new MongoDBStore({
   collection: 'sessions',
 });
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  store: store,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-  },
-}));
+store.on('error', function(error) {
+  console.log('SESSION STORE ERROR:', error);
+});
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
 
 // API routes
 const bookRoutes = require('./routes/bookRoutes');
@@ -55,7 +61,7 @@ app.use('/api/users', userRoutes); // Register user routes
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-// Serve React build files
+// Serve React build files for any unhandled routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });

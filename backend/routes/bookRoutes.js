@@ -24,4 +24,4 @@ router.put('/update-book', authMiddleware, bookController.updateBook);
 // Delete a book
 router.delete('/delete-book', authMiddleware, bookController.deleteBook);
 
-module.exports = router;    
+module.exports = router;

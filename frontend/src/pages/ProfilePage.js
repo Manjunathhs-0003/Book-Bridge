@@ -5,26 +5,16 @@ import { BackgroundBeams } from '../components/ui/background-beams';
 import { FlipWords } from '../components/ui/flip-words';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
+import { HoverEffect, Card, CardTitle, CardDescription } from '../components/ui/card-hover-effect';
 import { cn } from '../utils/cn';
-
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const { user: currentUser } = useContext(AuthContext);
 
-  const [contactDetails, setContactDetails] = useState({
-    email: '',
-    phone: '',
-    address: ''
-  });
-
-  const [newBook, setNewBook] = useState({
-    title: '',
-    author: '',
-    rating: '',
-    details: '', // Additional details for books
-  });
+  const [contactDetails, setContactDetails] = useState({ email: '', phone: '', address: '' });
+  const [newBook, setNewBook] = useState({ title: '', author: '', rating: '', details: '' });
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -56,7 +46,6 @@ const ProfilePage = () => {
     try {
       await axios.post('http://localhost:3001/api/books/add', newBook, { withCredentials: true });
       alert('Book added successfully');
-      // Clear form fields after submission
       setNewBook({ title: '', author: '', rating: '', details: '' });
       const response = await axios.get('http://localhost:3001/api/users/profile', { withCredentials: true });
       setUser(response.data);
@@ -80,13 +69,21 @@ const ProfilePage = () => {
 
   const handleBookDelete = async (bookId) => {
     try {
-      await axios.delete('http://localhost:3001/api/books/delete-book', { data: { bookId } }, { withCredentials: true });
+      await axios.delete(
+        'http://localhost:3001/api/books/delete-book',
+        {
+          data: { bookId },
+          withCredentials: true, // Ensure you send credentials
+        }
+      );
       setUser(prevUser => ({
         ...prevUser,
-        books: prevUser.books.filter(book => book._id !== bookId)
+        books: prevUser.books.filter(book => book._id !== bookId),
       }));
       alert('Book deleted successfully');
     } catch (error) {
+      console.error('Error deleting book:', error); // Log the error
+      alert(`Error deleting book: ${error.response?.data?.message || error.message}`);
       setError('Error deleting book');
     }
   };
@@ -102,9 +99,16 @@ const ProfilePage = () => {
   const words = [user.username, 'Profile'];
   const wordss = ['Books', 'Available'];
 
+  const books = user.books.map(book => ({
+    id: book._id, // Ensure each item has a unique identifier
+    title: book.title,
+    description: `Author: ${book.author}\nDetails: ${book.details}\nRating: ${book.rating}`,
+    link: `#`, // Placeholder link; you can link to a detailed book page if required
+  }));
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
-      <BackgroundBeams />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white">
+      <BackgroundBeams className="fixed inset-0 z-0 h-full w-full" />
       <div className="relative z-10 container mx-auto p-4 text-center space-y-8">
         <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
           <FlipWords words={words} className="inline-block" />
@@ -156,7 +160,7 @@ const ProfilePage = () => {
               />
             </LabelInputContainer>
 
-            <button type="submit" className="mt-4 p-[3px] relative">
+            <button type="submit" className="mt-4 p-[3px] relative w-full">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
               <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
                 Update
@@ -222,7 +226,7 @@ const ProfilePage = () => {
               />
             </LabelInputContainer>
 
-            <button type="submit" className="mt-4 p-[3px] relative">
+            <button type="submit" className="mt-4 p-[3px] relative w-full">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
               <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
                 Add Book
@@ -236,31 +240,7 @@ const ProfilePage = () => {
             <FlipWords words={wordss} className="inline-block" />
           </div>
           {user.books.length > 0 ? (
-            <ul className="space-y-4">
-              {user.books.map(book => (
-                <li key={book._id} className="bg-gray-800 p-4 rounded">
-                  <h3 className="text-xl font-bold">{book.title}</h3>
-                  <p>Author: {book.author}</p>
-                  <p>Rating: {book.rating}</p>
-                  <p>Details: {book.details}</p>
-                  <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
-                  <div className="space-x-2">
-                    <button
-                      onClick={() => handleBookUpdate(book._id, { title: book.title, author: book.author, availability: !book.availability })}
-                      className="mt-2 p-2 bg-blue-600 hover:bg-blue-700 rounded"
-                    >
-                      {book.availability ? 'Mark as Unavailable' : 'Mark as Available'}
-                    </button>
-                    <button
-                      onClick={() => handleBookDelete(book._id)}
-                      className="mt-2 p-2 bg-red-600 hover:bg-red-700 rounded"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <HoverEffect items={books} onDeleteBook={handleBookDelete} />
           ) : (
             <p>No books found.</p>
           )}
