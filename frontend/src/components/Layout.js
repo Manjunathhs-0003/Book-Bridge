@@ -1,13 +1,9 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import NavBar from './NavBar';  // Assuming NavBar is directly under components folder
 
+// Assuming NavBar is not needed anymore, we simply remove it
 const Layout = ({ children }) => {
-  const location = useLocation();
-
   return (
     <div>
-      {location.pathname !== "/" && <NavBar />}
       {children}
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContext';
-import { FloatingNav } from './ui/floating-navbar';
+import { FloatingNav } from './ui/floating-navbar'; // Using your existing FloatingNav component
 import { IconHome, IconUser, IconMessage } from '@tabler/icons-react';
 
 const NavBar = () => {

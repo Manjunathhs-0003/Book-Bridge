@@ -7,6 +7,7 @@ import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
 import { cn } from '../utils/cn';
 
+
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -16,6 +17,13 @@ const ProfilePage = () => {
     email: '',
     phone: '',
     address: ''
+  });
+
+  const [newBook, setNewBook] = useState({
+    title: '',
+    author: '',
+    rating: '',
+    details: '', // Additional details for books
   });
 
   useEffect(() => {
@@ -40,6 +48,20 @@ const ProfilePage = () => {
       alert('Contact details updated successfully');
     } catch (error) {
       setError('Error updating contact details');
+    }
+  };
+
+  const handleAddBook = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('http://localhost:3001/api/books/add', newBook, { withCredentials: true });
+      alert('Book added successfully');
+      // Clear form fields after submission
+      setNewBook({ title: '', author: '', rating: '', details: '' });
+      const response = await axios.get('http://localhost:3001/api/users/profile', { withCredentials: true });
+      setUser(response.data);
+    } catch (error) {
+      setError('Error adding book');
     }
   };
 
@@ -78,6 +100,7 @@ const ProfilePage = () => {
   }
 
   const words = [user.username, 'Profile'];
+  const wordss = ['Books', 'Available'];
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white">
@@ -142,31 +165,105 @@ const ProfilePage = () => {
           </form>
         </div>
 
+        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 dark:bg-black">
+          <h2 className="font-bold text-xl text-white dark:text-neutral-200">Add a Book</h2>
+          <p className="text-neutral-400 text-sm mt-2 max-w-sm dark:text-neutral-300">Add a new book to your collection.</p>
+
+          <form onSubmit={handleAddBook} className="my-8 space-y-4">
+            <LabelInputContainer>
+              <Label htmlFor="title">Book Title</Label>
+              <Input
+                id="title"
+                type="text"
+                value={newBook.title}
+                onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
+                placeholder="Book Title"
+                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="author">Author</Label>
+              <Input
+                id="author"
+                type="text"
+                value={newBook.author}
+                onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
+                placeholder="Author"
+                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="rating">Rating</Label>
+              <Input
+                id="rating"
+                type="number"
+                value={newBook.rating}
+                onChange={(e) => setNewBook({ ...newBook, rating: e.target.value })}
+                placeholder="Rating"
+                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                required
+              />
+            </LabelInputContainer>
+
+            <LabelInputContainer>
+              <Label htmlFor="details">Details about the book</Label>
+              <Input
+                id="details"
+                type="text"
+                value={newBook.details}
+                onChange={(e) => setNewBook({ ...newBook, details: e.target.value })}
+                placeholder="Details"
+                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                required
+              />
+            </LabelInputContainer>
+
+            <button type="submit" className="mt-4 p-[3px] relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+              <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+                Add Book
+              </div>
+            </button>
+          </form>
+        </div>
+
         <div className="mt-8 space-y-4">
-          <h2>Your Books for Trading</h2>
-          <ul className="space-y-4">
-            {user.books.map(book => (
-              <li key={book._id} className="bg-gray-800 p-4 rounded">
-                <h3 className="text-xl font-bold">{book.title}</h3>
-                <p>Author: {book.author}</p>
-                <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
-                <div className="space-x-2">
-                  <button
-                    onClick={() => handleBookUpdate(book._id, { title: book.title, author: book.author, availability: !book.availability })}
-                    className="mt-2 p-2 bg-blue-600 hover:bg-blue-700 rounded"
-                  >
-                    {book.availability ? 'Mark as Unavailable' : 'Mark as Available'}
-                  </button>
-                  <button
-                    onClick={() => handleBookDelete(book._id)}
-                    className="mt-2 p-2 bg-red-600 hover:bg-red-700 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
+            <FlipWords words={wordss} className="inline-block" />
+          </div>
+          {user.books.length > 0 ? (
+            <ul className="space-y-4">
+              {user.books.map(book => (
+                <li key={book._id} className="bg-gray-800 p-4 rounded">
+                  <h3 className="text-xl font-bold">{book.title}</h3>
+                  <p>Author: {book.author}</p>
+                  <p>Rating: {book.rating}</p>
+                  <p>Details: {book.details}</p>
+                  <p>Availability: {book.availability ? 'Available' : 'Not Available'}</p>
+                  <div className="space-x-2">
+                    <button
+                      onClick={() => handleBookUpdate(book._id, { title: book.title, author: book.author, availability: !book.availability })}
+                      className="mt-2 p-2 bg-blue-600 hover:bg-blue-700 rounded"
+                    >
+                      {book.availability ? 'Mark as Unavailable' : 'Mark as Available'}
+                    </button>
+                    <button
+                      onClick={() => handleBookDelete(book._id)}
+                      className="mt-2 p-2 bg-red-600 hover:bg-red-700 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No books found.</p>
+          )}
         </div>
       </div>
     </div>

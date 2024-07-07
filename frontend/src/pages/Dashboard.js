@@ -1,20 +1,28 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import axios from 'axios';
 import { AuthContext } from "../contexts/AuthContext";
 import { HeroHighlight } from "../components/ui/hero-highlight";
-// import NavBar from "../components/NavBar";
 import { motion } from "framer-motion";
 import { CardBody, CardContainer, CardItem } from "../components/ui/3d-card";
+import { BookCard } from "../components/ui/book-card";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/books")
+      .then(response => {
+        console.log(response.data); // Make sure response has `rating` and `details`
+        setBooks(response.data);
+      })
+      .catch(error => console.error(error));
+  }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
-      {/* <NavBar /> */}
+    <div className="min-h-screen bg-black text-white">
       <HeroHighlight>
-        {/* Assuming HeroHighlight has a background image or color */}
-        <div className="container mx-auto p-4 text-center flex flex-col items-center justify-center flex-1">
+        <div className="container mx-auto p-4 text-center relative z-20">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -24,6 +32,7 @@ const Dashboard = () => {
             Explore the world of books and trading.
           </motion.h1>
           <InfoSection />
+          <BooksSection books={books} />
         </div>
       </HeroHighlight>
     </div>
@@ -32,42 +41,25 @@ const Dashboard = () => {
 
 const InfoSection = () => {
   return (
-    <div className="flex flex-col items-center justify-center space-y-5">
-      <div className="flex flex-wrap justify-center space-x-5">
+    <div className="my-16 flex flex-col items-center justify-center space-y-8 relative z-10">
+      <div className="flex flex-wrap justify-center gap-8">
         <CardContainer className="inter-var">
           <CardBody className="bg-transparent relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
-            <CardItem
-              translateZ="50"
-              className="text-xl font-bold text-white"
-            >
+            <CardItem translateZ="50" className="text-xl font-bold text-white">
               About the Platform
             </CardItem>
-            <CardItem
-              as="p"
-              translateZ="60"
-              className="text-white text-sm max-w-sm mt-2"
-            >
-              Our book swapping platform allows you to easily trade your books
-              with others. Engage in a community of book lovers and discover new
-              reads without spending a dime.
+            <CardItem as="p" translateZ="60" className="text-white text-sm max-w-sm mt-2">
+              Our book swapping platform allows you to easily trade your books with others. Engage in a community of book lovers and discover new reads without spending a dime.
             </CardItem>
-            <CardItem translateZ="100" className="w-full mt-4"></CardItem>
           </CardBody>
         </CardContainer>
 
         <CardContainer className="inter-var">
           <CardBody className="bg-transparent relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
-            <CardItem
-              translateZ="50"
-              className="text-xl font-bold text-white"
-            >
+            <CardItem translateZ="50" className="text-xl font-bold text-white">
               How It Works
             </CardItem>
-            <CardItem
-              as="p"
-              translateZ="60"
-              className="text-white text-sm max-w-sm mt-2"
-            >
+            <CardItem as="p" translateZ="60" className="text-white text-sm max-w-sm mt-2">
               <ul className="text-lg list-disc mt-4">
                 <li>Register and log in to start swapping.</li>
                 <li>List the books you want to exchange.</li>
@@ -75,9 +67,21 @@ const InfoSection = () => {
                 <li>Contact users and arrange the swap!</li>
               </ul>
             </CardItem>
-            <CardItem translateZ="100" className="w-full mt-4"></CardItem>
           </CardBody>
         </CardContainer>
+      </div>
+    </div>
+  );
+};
+
+const BooksSection = ({ books }) => {
+  return (
+    <div className="mt-16 relative z-10">
+      <h2 className="text-3xl font-bold mb-8">Books Available for Trading</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {books.map(book => (
+          <BookCard key={book._id} book={book} />
+        ))}
       </div>
     </div>
   );

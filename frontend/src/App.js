@@ -12,14 +12,15 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <Routes>
-          {/* Wrap the page components inside Layout except for HomePage */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-          <Route path="/profile" element={<Layout><ProfilePage /></Layout>} />
-          <Route path="/login" element={<Layout><LoginPage /></Layout>} />
-          <Route path="/register" element={<Layout><RegisterPage /></Layout>} />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+        </Layout>
       </Router>
     </AuthProvider>
   );

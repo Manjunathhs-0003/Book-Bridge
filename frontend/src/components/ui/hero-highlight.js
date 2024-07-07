@@ -17,7 +17,7 @@ export const HeroHighlight = ({ children, className, containerClassName }) => {
   return (
     <div
       className={cn(
-        "relative h-screen flex items-center justify-center w-full group",
+        "relative min-h-screen flex items-center justify-center w-full group", // changed h-screen to min-h-screen
         containerClassName
       )}
       onMouseMove={handleMouseMove}
