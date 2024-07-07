@@ -60,7 +60,9 @@ Book Swapping
    │  │  ├─ NavBar.js
    │  │  └─ ui
    │  │     ├─ 3d-card.js
+   │  │     ├─ Card.js
    │  │     ├─ background-beams.js
+   │  │     ├─ flip-words.js
    │  │     ├─ floating-navbar.js
    │  │     ├─ hero-highlight.js
    │  │     ├─ input.js

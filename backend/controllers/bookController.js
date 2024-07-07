@@ -4,7 +4,7 @@ const User = require('../models/userModel');
 // Controller to get all books
 exports.getBooks = async (req, res) => {
   try {
-    const books = await Book.find().populate('owner', 'username rating');
+    const books = await Book.find().populate('owner', 'username email');
     res.status(200).json(books);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching books', error });

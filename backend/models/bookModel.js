@@ -33,6 +33,14 @@ const bookSchema = new mongoose.Schema({
   genre: {
     type: String,
   },
+  rating: { // Add rating field
+    type: Number,
+    required: true,
+  },
+  details: { // Add details field
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Book', bookSchema);
