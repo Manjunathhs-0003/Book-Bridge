@@ -71,7 +71,8 @@ Book Swapping
    │  │     ├─ hero-highlight.js
    │  │     ├─ input.js
    │  │     ├─ label.js
-   │  │     └─ meteors.js
+   │  │     ├─ meteors.js
+   │  │     └─ placeholders-and-vanish-input.js
    │  ├─ contexts
    │  │  └─ AuthContext.js
    │  ├─ index.css

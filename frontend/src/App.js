@@ -8,6 +8,8 @@ import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import NavBar from './components/NavBar'; // Import NavBar
+import './styles.css';
+
 
 const App = () => {
   return (
