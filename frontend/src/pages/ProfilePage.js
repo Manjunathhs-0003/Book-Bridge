@@ -35,7 +35,7 @@ const ProfilePage = () => {
     try {
       const response = await axios.put('http://localhost:3001/api/users/contact-details', contactDetails, { withCredentials: true });
       setUser(response.data);
-      alert('Contact details updated successfully');
+      alert('Contact details updated successfully...');
     } catch (error) {
       setError('Error updating contact details');
     }
@@ -45,7 +45,7 @@ const ProfilePage = () => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:3001/api/books/add', newBook, { withCredentials: true });
-      alert('Book added successfully');
+      alert('Book added successfully...');
       setNewBook({ title: '', author: '', rating: '', details: '' });
       const response = await axios.get('http://localhost:3001/api/users/profile', { withCredentials: true });
       setUser(response.data);
@@ -61,7 +61,7 @@ const ProfilePage = () => {
         ...prevUser,
         books: prevUser.books.map(book => book._id === bookId ? response.data : book)
       }));
-      alert('Book updated successfully');
+      alert('Book updated successfully...');
     } catch (error) {
       setError('Error updating book');
     }
