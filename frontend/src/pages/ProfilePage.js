@@ -100,10 +100,10 @@ const ProfilePage = () => {
   const wordss = ['Books', 'Available'];
 
   const books = user.books.map(book => ({
-    id: book._id, // Ensure each item has a unique identifier
+    id: book._id, 
     title: book.title,
     description: `Author: ${book.author}\nDetails: ${book.details}\nRating: ${book.rating}`,
-    link: `#`, // Placeholder link; you can link to a detailed book page if required
+    link: `#`, // Placeholder link
   }));
 
   return (
@@ -116,7 +116,7 @@ const ProfilePage = () => {
 
         <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 dark:bg-black">
           <h2 className="font-bold text-xl text-white dark:text-neutral-200">Update Contact Details</h2>
-          <p className="text-neutral-400 text-sm mt-2 max-w-sm dark:text-neutral-300">Please update your contact details below.</p>
+          <p className="text-neutral-400 text-sm mt-2 max-w-sm dark:text-neutral-300">Please update your contact details below...</p>
 
           <form onSubmit={handleContactDetailsChange} className="my-8 space-y-4">
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
