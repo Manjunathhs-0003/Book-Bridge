@@ -41,7 +41,7 @@ const LoginPage = () => {
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 relative z-10">
         <h2 className="font-bold text-xl text-white">Welcome to Book Bridge Platform</h2>
         <p className="text-neutral-300 text-sm mt-2">
-          Register to start trading books on our platform.
+          Login to start trading the books.
         </p>
         
         <form className="my-8" onSubmit={handleSubmit}>

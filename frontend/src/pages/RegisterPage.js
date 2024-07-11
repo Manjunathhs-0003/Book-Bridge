@@ -28,9 +28,9 @@ const RegisterPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-black text-white relative">
       <BackgroundBeams className="fixed inset-0 h-full w-full" />
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 relative z-10">
-        <h1 className="font-bold text-xl text-neutral-200">Welcome to Book Swapping Platform</h1>
+        <h1 className="font-bold text-xl text-neutral-200">Welcome to Book Bridge Platform</h1>
         <p className="text-neutral-300 text-sm mt-2">
-          Register to start trading books on our platform.
+          Register here to start trading the books.
         </p>
         <form className="my-8" onSubmit={handleSubmit}>
           <div className="mb-4">
