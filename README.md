@@ -87,6 +87,7 @@ Book Swapping
    │  │  ├─ LoginPage.js
    │  │  ├─ ProfilePage.js
    │  │  └─ RegisterPage.js
+   │  ├─ styles.css
    │  └─ utils
    │     └─ cn.js
    └─ tailwind.config.js
