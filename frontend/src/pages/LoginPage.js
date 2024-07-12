@@ -38,8 +38,8 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white relative">
       <BackgroundBeams className="fixed inset-0 h-full w-full" />
-      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 relative z-10">
-        <h2 className="font-bold text-xl text-white">Welcome to Book Bridge Platform</h2>
+      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 relative z-10 yatra-one-regular">
+        <h2 className="font-bold text-xl text-white ">Welcome to Book Bridge Platform</h2>
         <p className="text-neutral-300 text-sm mt-2">
           Login to start trading the books.
         </p>
@@ -62,6 +62,7 @@ const LoginPage = () => {
         </span>
       </button>
           </div>
+          
 
           <div className="my-8 h-px bg-gradient-to-r from-transparent via-neutral-600 to-transparent" />
         </form>
