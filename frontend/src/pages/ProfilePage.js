@@ -111,10 +111,10 @@ const ProfilePage = () => {
       <BackgroundBeams className="fixed inset-0 z-0 h-full w-full" />
       <div className="relative z-10 container mx-auto p-4 text-center space-y-8">
         <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
-          <FlipWords words={words} className="inline-block" />
+          <FlipWords words={words} className="inline-block yatra-one-regular text-center" />
         </div>
 
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 dark:bg-black">
+        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900  yatra-one-regular dark:bg-black">
           <h2 className="font-bold text-xl text-white dark:text-neutral-200">Update Contact Details</h2>
           <p className="text-neutral-400 text-sm mt-2 max-w-sm dark:text-neutral-300">Please update your contact details below...</p>
 
@@ -169,7 +169,7 @@ const ProfilePage = () => {
           </form>
         </div>
 
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 dark:bg-black">
+        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900  yatra-one-regular dark:bg-black">
           <h2 className="font-bold text-xl text-white dark:text-neutral-200">Add a Book</h2>
           <p className="text-neutral-400 text-sm mt-2 max-w-sm dark:text-neutral-300">Add a new book to your collection.</p>
 
@@ -182,7 +182,7 @@ const ProfilePage = () => {
                 value={newBook.title}
                 onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
                 placeholder="Book Title"
-                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                className="w-ful p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                 required
               />
             </LabelInputContainer>
@@ -195,7 +195,7 @@ const ProfilePage = () => {
                 value={newBook.author}
                 onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
                 placeholder="Author"
-                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                className="w-full p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                 required
               />
             </LabelInputContainer>
@@ -208,7 +208,7 @@ const ProfilePage = () => {
                 value={newBook.rating}
                 onChange={(e) => setNewBook({ ...newBook, rating: e.target.value })}
                 placeholder="Rating"
-                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                className="w-full p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                 required
               />
             </LabelInputContainer>
@@ -221,7 +221,7 @@ const ProfilePage = () => {
                 value={newBook.details}
                 onChange={(e) => setNewBook({ ...newBook, details: e.target.value })}
                 placeholder="Details"
-                className="w-full p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                className="w-full p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                 required
               />
             </LabelInputContainer>
@@ -235,9 +235,9 @@ const ProfilePage = () => {
           </form>
         </div>
 
-        <div className="mt-8 space-y-4">
-          <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
-            <FlipWords words={wordss} className="inline-block" />
+        <div className="6">
+          <div className="text-4xl mx-auto font-normal text-neutral-600 yatra-one-regular dark:text-neutral-400 ">
+            <FlipWords words={wordss} className="inline-block yatra-one-regular text-center" />
           </div>
           {user.books.length > 0 ? (
             <HoverEffect items={books} onDeleteBook={handleBookDelete} />
