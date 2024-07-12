@@ -6,10 +6,11 @@ const HomePage = () => (
   <div className="min-h-screen bg-black text-white">
     <HeroHighlight>
       <div className="relative z-20 text-center px-4">
-        <h1 className="text-9xl font-bold mt-5 mb-10 yatra-one-regular">Book Bridge</h1>
-        <h2 className="text-4xl font-bold mt-2 mb-10">Trade Books Effortlessly</h2>
-        <p className="text-lg mt-4 mb-8">
+        <h1 className="text-9xl font-bold mt-10 mb-15 yatra-one-regular">Book Bridge</h1>
+        <h2 className="text-5xl font-bold mt-2 mb-10 yatra-one-regular">Trade Books Effortlessly</h2>
+        <p className="text-lg mt-4 mb-8 yatra-one-regular">
           Welcome to our Book Trading Platform <br /> where you can easily swap books with a community of avid readers.
+          <br />
           Discover new titles, share your favorite books, and enjoy the numerous benefits of book swapping.
         </p>
         <div className="flex justify-center space-x-5 mt-15">
