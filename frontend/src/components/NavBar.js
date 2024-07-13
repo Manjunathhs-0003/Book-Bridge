@@ -1,10 +1,23 @@
-import React from "react";
-import { FloatingNav } from "./ui/floating-navbar";
+import React, { useContext } from "react";
+import { FloatingNav } from "./ui/floating-navbar"; // Make sure this path is correct
 import { IconHome, IconUser } from "@tabler/icons-react";
 import { useLocation } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+import axios from 'axios';
 
 const NavBar = () => {
   const location = useLocation();
+  const { user, setUser } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:3001/api/auth/logout', {}, { withCredentials: true });
+      setUser(null);
+    } catch (error) {
+      console.error('Error logging out', error);
+    }
+  };
+
   const navItems = [
     {
       name: "Home",
@@ -16,11 +29,13 @@ const NavBar = () => {
       link: "/dashboard",
       icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
-    {
-      name: "Profile",
-      link: "/profile",
-      icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
+    ...(user ? [
+      {
+        name: "Profile",
+        link: "/profile",
+        icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
+      },
+    ] : [])
   ];
 
   // Exclude the FloatingNav on Home Page
@@ -28,7 +43,15 @@ const NavBar = () => {
     return null;
   }
 
-  return <FloatingNav navItems={navItems} />;
+  return (
+    <div className="relative w-full">
+      <FloatingNav 
+        navItems={navItems} 
+        user={user} 
+        onLogout={handleLogout} 
+      />
+    </div>
+  );
 };
 
 export default NavBar;
