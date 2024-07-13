@@ -82,6 +82,7 @@ Book Swapping
    │  │  ├─ BookDetailsPage.js
    │  │  ├─ BookListPage.js
    │  │  ├─ BooksPage.js
+   │  │  ├─ BuyBookPage.js
    │  │  ├─ Dashboard.js
    │  │  ├─ HomePage.js
    │  │  ├─ LoginPage.js
