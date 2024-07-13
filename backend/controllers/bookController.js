@@ -11,9 +11,6 @@ exports.getBooks = async (req, res) => {
   }
 };
 
-// backend/controllers/bookController.js
-const Book = require('../models/bookModel');
-const User = require('../models/userModel');
 
 // Controller to get a book by ID
 exports.getBookById = async (req, res) => {
