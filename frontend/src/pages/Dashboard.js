@@ -13,26 +13,10 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/api/books")
       .then(response => {
-        console.log(response.data); // Ensure response has `rating` and `details`
         setBooks(response.data);
       })
       .catch(error => console.error(error));
   }, []);
-
-  const handleBuyBook = async (bookId) => {
-    try {
-      const response = await axios.get(`http://localhost:3001/api/books/${bookId}`, { withCredentials: true });
-      console.log('Fetched book details:', response.data); // Logging for debug
-
-      setBooks(prevBooks =>
-        prevBooks.map(book =>
-          book._id === bookId ? { ...book, ownerContact: response.data.owner.contactDetails } : book
-        )
-      );
-    } catch (error) {
-      console.error('Error fetching contact details:', error);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -47,7 +31,7 @@ const Dashboard = () => {
             Explore the world of books and trading.
           </motion.h1>
           <InfoSection />
-          <BooksSection books={books} onBuyBook={handleBuyBook} />
+          <BooksSection books={books} />
         </div>
       </HeroHighlight>
     </div>
@@ -60,10 +44,10 @@ const InfoSection = () => {
       <div className="flex flex-wrap justify-center gap-8">
         <CardContainer className="inter-var">
           <CardBody className="bg-transparent relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
-            <CardItem translateZ="100" className="text-xl  font-bold text-white yatra-one-regular">
+            <CardItem translateZ="100" className="text-xl font-bold text-white yatra-one-regular">
               About the Platform
             </CardItem>
-            <CardItem as="p" translateZ="60" className="text-lg  mt-4 yatra-one-regular">
+            <CardItem translateZ="60" className="text-lg mt-4 yatra-one-regular">
               Our book swapping platform allows you to easily trade your books with others. Engage in a community of book lovers and discover new reads without spending a dime.
             </CardItem>
           </CardBody>
@@ -74,13 +58,15 @@ const InfoSection = () => {
             <CardItem translateZ="100" className="text-xl font-bold text-white yatra-one-regular">
               How It Works
             </CardItem>
-            <CardItem as="p" translateZ="60" className="text-white text-sm max-w-sm mt-2">
-              <ul className="text-lg list-disc mt-4 yatra-one-regular">
-                <li>Register and log in to start swapping.</li>
-                <li>List the books you want to exchange.</li>
-                <li>Browse books listed by other users.</li>
-                <li>Contact users and arrange the swap!</li>
-              </ul>
+            <CardItem translateZ="60" className="text-sm max-w-sm mt-2">
+              <div className="text-lg list-disc mt-4 yatra-one-regular">
+                <ul>
+                  <li>Register and log in to start swapping.</li>
+                  <li>List the books you want to exchange.</li>
+                  <li>Browse books listed by other users.</li>
+                  <li>Contact users and arrange the swap!</li>
+                </ul>
+              </div>
             </CardItem>
           </CardBody>
         </CardContainer>
@@ -89,13 +75,13 @@ const InfoSection = () => {
   );
 };
 
-const BooksSection = ({ books, onBuyBook }) => {
+const BooksSection = ({ books }) => {
   return (
     <div className="mt-16 relative z-10">
       <h2 className="text-3xl font-bold mb-8 yatra-one-regular">Books Available for Trading</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {books.map(book => (
-          <BookCard key={book._id} book={book} onBuy={onBuyBook} />
+          <BookCard key={book._id} book={book} />
         ))}
       </div>
     </div>
