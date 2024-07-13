@@ -11,14 +11,21 @@ exports.getBooks = async (req, res) => {
   }
 };
 
+// backend/controllers/bookController.js
+const Book = require('../models/bookModel');
+const User = require('../models/userModel');
+
 // Controller to get a book by ID
 exports.getBookById = async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id).populate('owner', 'username email');
+    const book = await Book.findById(req.params.id).populate('owner', 'username email contactDetails');
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
-    res.status(200).json(book);
+    res.status(200).json({
+      book,
+      owner: book.owner // includes 'contactDetails', 'username', and 'email'
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching book details', error });
   }
