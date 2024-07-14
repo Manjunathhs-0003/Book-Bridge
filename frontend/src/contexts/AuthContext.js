@@ -22,8 +22,12 @@ export const AuthProvider = ({ children }) => {
     checkAuthenticated();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>; // Or a spinner/loading animation
+  }
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, checkAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
