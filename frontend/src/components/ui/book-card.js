@@ -1,13 +1,18 @@
-// src/components/ui/book-card.js
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 import { Meteors } from "./meteors";
 
 export const BookCard = ({ book }) => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleBuyClick = () => {
-    navigate(`/buy/${book._id}`);
+    if (user) {
+      navigate(`/buy/${book._id}`);
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
