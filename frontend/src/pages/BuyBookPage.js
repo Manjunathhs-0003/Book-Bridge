@@ -6,7 +6,6 @@ import { BackgroundBeams } from '../components/ui/background-beams';
 import { FlipWords } from '../components/ui/flip-words';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
-import { HoverEffect } from '../components/ui/card-hover-effect';
 import { cn } from '../utils/cn';
 
 const BuyBookPage = () => {
@@ -20,8 +19,7 @@ const BuyBookPage = () => {
         const response = await axios.get(`http://localhost:3001/api/books/${id}`);
         console.log('Response data:', response.data);
 
-        // Ensure data structure is as expected
-        if (response.data && response.data._id) {
+        if (response.data && response.data.book && response.data.owner && response.data.owner.contactDetails) {
           setBook(response.data);
         } else {
           console.error('Unexpected response structure:', response.data);
@@ -51,7 +49,7 @@ const BuyBookPage = () => {
         <div className="text-6xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
           <FlipWords words={words} className="inline-block yatra-one-regular text-center" />
         </div>
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900  yatra-one-regular dark:bg-black">
+        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 yatra-one-regular dark:bg-black">
           <h2 className="font-bold text-xl text-white dark:text-neutral-200">Book Details</h2>
           <p className="text-neutral-400 text-sm mt-2 max-w-sm dark:text-neutral-300">Find below the details of the book you're purchasing...</p>
           <div className="my-8 space-y-4">
@@ -59,7 +57,7 @@ const BuyBookPage = () => {
               <Label>Title</Label>
               <Input
                 type="text"
-                value={book.title}
+                value={book.book.title} 
                 readOnly
                 className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
               />
@@ -68,7 +66,7 @@ const BuyBookPage = () => {
               <Label>Author</Label>
               <Input
                 type="text"
-                value={book.author}
+                value={book.book.author} 
                 readOnly
                 className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
               />
@@ -77,14 +75,14 @@ const BuyBookPage = () => {
               <Label>Description</Label>
               <Input
                 type="text"
-                value={book.details}
+                value={book.book.details || 'No Description'} 
                 readOnly
                 className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
               />
             </LabelInputContainer>
           </div>
         </div>
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900  yatra-one-regular dark:bg-black">
+        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 yatra-one-regular dark:bg-black">
           <h2 className="font-bold text-xl text-white dark:text-neutral-200">Contact Seller</h2>
           <div className="my-8 space-y-4">
             <LabelInputContainer>
@@ -101,6 +99,15 @@ const BuyBookPage = () => {
               <Input
                 type="text"
                 value={book.owner.username}
+                readOnly
+                className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+              />
+            </LabelInputContainer>
+            <LabelInputContainer>
+              <Label>Phone</Label>
+              <Input
+                type="text"
+                value={book.owner.contactDetails.phone || 'No Phone'} 
                 readOnly
                 className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
               />
