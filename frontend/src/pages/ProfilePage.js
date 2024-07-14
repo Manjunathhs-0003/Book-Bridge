@@ -133,7 +133,7 @@ const ProfilePage = () => {
   }));
 
   return (
-    <div className="min-h-screen flex  items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-black text-white">
       <BackgroundBeams className="fixed inset-0 z-0 h-full w-full" />
       <div className="relative z-10 container mx-auto p-4 text-center space-y-8">
         <div className="text-4xl mx-auto font-normal text-neutral-600 dark:text-neutral-400">
@@ -143,19 +143,19 @@ const ProfilePage = () => {
           />
         </div>
 
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900  yatra-one-regular dark:bg-black">
-          <h2 className="font-bold text-xl text-white dark:text-neutral-200">
-            Update Contact Details
-          </h2>
-          <p className="text-neutral-400 text-sm mt-4 max-w-sm dark:text-neutral-300">
-            Please update your contact details below...
-          </p>
+        <div className="flex max-w-4xl w-full mx-auto space-x-8">
 
-          <form
-            onSubmit={handleContactDetailsChange}
-            className="my-8 space-y-4"
-          >
-            <div className="space-y-4">
+          <div className="w-1/2 bg-neutral-900 rounded-none md:rounded-lg shadow-input p-8">
+            <h2 className="font-bold text-xl text-white dark:text-neutral-200">
+              Update Contact Details
+            </h2>
+            <p className="text-neutral-400 text-sm mt-4 max-w-sm dark:text-neutral-300">
+              Please update your contact details below...
+            </p>
+            <form
+              onSubmit={handleContactDetailsChange}
+              className="my-8 space-y-4"
+            >
               <LabelInputContainer>
                 <Label htmlFor="email">Email Address</Label>
                 <Input
@@ -187,118 +187,118 @@ const ProfilePage = () => {
                     })
                   }
                   placeholder="Phone Number"
-                  className="w-80 p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                   required
                 />
               </LabelInputContainer>
-            </div>
 
-            <LabelInputContainer className="mb-4">
-              <Label htmlFor="address">Address</Label>
-              <Input
-                id="address"
-                type="text"
-                value={contactDetails.address}
-                onChange={(e) =>
-                  setContactDetails({
-                    ...contactDetails,
-                    address: e.target.value,
-                  })
-                }
-                placeholder="Your Address"
-                className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
-                required
-              />
-            </LabelInputContainer>
+              <LabelInputContainer className="mb-4">
+                <Label htmlFor="address">Address</Label>
+                <Input
+                  id="address"
+                  type="text"
+                  value={contactDetails.address}
+                  onChange={(e) =>
+                    setContactDetails({
+                      ...contactDetails,
+                      address: e.target.value,
+                    })
+                  }
+                  placeholder="Your Address"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  required
+                />
+              </LabelInputContainer>
 
-            <button type="submit" className="mt-4 p-[3px] relative w-55">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-              <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
-                Update
-              </div>
-            </button>
-          </form>
-        </div>
+              <button type="submit" className="mt-4 p-[1px] relative w-full">
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+                <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+                  Update
+                </div>
+              </button>
+            </form>
+          </div>
 
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900  yatra-one-regular dark:bg-black">
-          <h2 className="font-bold text-xl text-white dark:text-neutral-200">
-            Add a Book
-          </h2>
-          <p className="text-neutral-400 text-sm mt-4 max-w-sm dark:text-neutral-300">
-            Add a new book to your collection.
-          </p>
+          <div className="w-1/2 bg-neutral-900 rounded-none md:rounded-lg shadow-input p-8">
+            <h2 className="font-bold text-xl text-white dark:text-neutral-200">
+              Add a Book
+            </h2>
+            <p className="text-neutral-400 text-sm mt-4 max-w-sm dark:text-neutral-300">
+              Add a new book to your collection.
+            </p>
+            <form onSubmit={handleAddBook} className="my-8 space-y-4">
+              <LabelInputContainer>
+                <Label htmlFor="title">Book Title</Label>
+                <Input
+                  id="title"
+                  type="text"
+                  value={newBook.title}
+                  onChange={(e) =>
+                    setNewBook({ ...newBook, title: e.target.value })
+                  }
+                  placeholder="Book Title"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  required
+                />
+              </LabelInputContainer>
 
-          <form onSubmit={handleAddBook} className="my-8 space-y-4">
-            <LabelInputContainer>
-              <Label htmlFor="title">Book Title</Label>
-              <Input
-                id="title"
-                type="text"
-                value={newBook.title}
-                onChange={(e) =>
-                  setNewBook({ ...newBook, title: e.target.value })
-                }
-                placeholder="Book Title"
-                className="w-80 p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
-                required
-              />
-            </LabelInputContainer>
+              <LabelInputContainer>
+                <Label htmlFor="author">Author</Label>
+                <Input
+                  id="author"
+                  type="text"
+                  value={newBook.author}
+                  onChange={(e) =>
+                    setNewBook({ ...newBook, author: e.target.value })
+                  }
+                  placeholder="Author"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  required
+                />
+              </LabelInputContainer>
 
-            <LabelInputContainer>
-              <Label htmlFor="author">Author</Label>
-              <Input
-                id="author"
-                type="text"
-                value={newBook.author}
-                onChange={(e) =>
-                  setNewBook({ ...newBook, author: e.target.value })
-                }
-                placeholder="Author"
-                className="w-80 p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
-                required
-              />
-            </LabelInputContainer>
+              <LabelInputContainer>
+                <Label htmlFor="rating">Rating</Label>
+                <Input
+                  id="rating"
+                  type="number"
+                  value={newBook.rating}
+                  onChange={(e) => {
+                    const value = Math.max(0, Math.min(10, e.target.value));
+                    setNewBook({ ...newBook, rating: value });
+                  }}
+                  placeholder="Rating"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  min="0"
+                  max="10"
+                  required
+                />
+              </LabelInputContainer>
 
-            <LabelInputContainer>
-              <Label htmlFor="rating">Rating</Label>
-              <Input
-                id="rating"
-                type="number"
-                value={newBook.rating}
-                onChange={(e) => {
-                  const value = Math.max(0, Math.min(10, e.target.value));
-                  setNewBook({ ...newBook, rating: value });
-                }}
-                placeholder="Rating"
-                className="w-80 p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
-                min="0"
-                max="10"
-                required
-              />
-            </LabelInputContainer>
+              <LabelInputContainer>
+                <Label htmlFor="details">Details about the book</Label>
+                <Input
+                  id="details"
+                  type="text"
+                  value={newBook.details}
+                  onChange={(e) =>
+                    setNewBook({ ...newBook, details: e.target.value })
+                  }
+                  placeholder="Details"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  required
+                />
+              </LabelInputContainer>
 
-            <LabelInputContainer>
-              <Label htmlFor="details">Details about the book</Label>
-              <Input
-                id="details"
-                type="text"
-                value={newBook.details}
-                onChange={(e) =>
-                  setNewBook({ ...newBook, details: e.target.value })
-                }
-                placeholder="Details"
-                className="w-80 p-4 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
-                required
-              />
-            </LabelInputContainer>
+              <button type="submit" className="mt-4 p-[1px] relative w-full">
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+                <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+                  Add Book
+                </div>
+              </button>
+            </form>
+          </div>
 
-            <button type="submit" className="mt-4 p-[3px] relative w-55">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-              <div className="px-8 py-2 bg-black rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
-                Add Book
-              </div>
-            </button>
-          </form>
         </div>
 
         <div className="6">
