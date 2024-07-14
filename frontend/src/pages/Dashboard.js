@@ -5,10 +5,12 @@ import { HeroHighlight } from "../components/ui/hero-highlight";
 import { motion } from "framer-motion";
 import { CardBody, CardContainer, CardItem } from "../components/ui/3d-card";
 import { BookCard } from "../components/ui/book-card";
+import { Button } from "../components/ui/moving-border"; // Import the MovingBorder component
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const [books, setBooks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     axios.get("http://localhost:3001/api/books")
@@ -17,6 +19,15 @@ const Dashboard = () => {
       })
       .catch(error => console.error(error));
   }, []);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredBooks = books.filter(book =>
+    book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    book.author.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -31,7 +42,7 @@ const Dashboard = () => {
             Explore the world of books and trading.
           </motion.h1>
           <InfoSection />
-          <BooksSection books={books} />
+          <BooksSection books={filteredBooks} searchQuery={searchQuery} onSearchChange={handleSearchChange} />
         </div>
       </HeroHighlight>
     </div>
@@ -75,10 +86,24 @@ const InfoSection = () => {
   );
 };
 
-const BooksSection = ({ books }) => {
+const BooksSection = ({ books, searchQuery, onSearchChange }) => {
   return (
     <div className="mt-16 relative z-10">
-      <h2 className="text-3xl font-bold mb-8 yatra-one-regular">Books Available for Trading</h2>
+      <h2 className="text-3xl font-bold mb-4 yatra-one-regular">Books Available for Trading</h2>
+      <div className="mb-8">
+        <Button
+          borderRadius="1rem"
+          className="bg-transparent text-white border-neutral-200 dark:border-slate-800"
+        >
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={onSearchChange}
+            placeholder="Search for books..."
+            className="w-full h-full p-2 bg-transparent yatra-one-regular text-white border-none focus:outline-none"
+          />
+        </Button>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {books.map(book => (
           <BookCard key={book._id} book={book} />
