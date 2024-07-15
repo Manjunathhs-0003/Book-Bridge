@@ -18,11 +18,14 @@ const ProfilePage = () => {
     phone: "",
     address: "",
   });
+  
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
     rating: "",
     details: "",
+    fixedPrice: "", // New field for fixed price
+    rentalPrice: "", // New field for rental price
   });
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const ProfilePage = () => {
         withCredentials: true,
       });
       alert("Book added successfully...");
-      setNewBook({ title: "", author: "", rating: "", details: "" });
+      setNewBook({ title: "", author: "", rating: "", details: "", fixedPrice: "", rentalPrice: "" });
       const response = await axios.get(
         "http://localhost:3001/api/users/profile",
         { withCredentials: true }
@@ -98,7 +101,7 @@ const ProfilePage = () => {
     try {
       await axios.delete("http://localhost:3001/api/books/delete-book", {
         data: { bookId },
-        withCredentials: true, // Ensure you send credentials
+        withCredentials: true, 
       });
       setUser((prevUser) => ({
         ...prevUser,
@@ -106,10 +109,8 @@ const ProfilePage = () => {
       }));
       alert("Book deleted successfully");
     } catch (error) {
-      console.error("Error deleting book:", error); // Log the error
-      alert(
-        `Error deleting book: ${error.response?.data?.message || error.message}`
-      );
+      console.error("Error deleting book:", error); 
+      alert(`Error deleting book: ${error.response?.data?.message || error.message}`);
       setError("Error deleting book");
     }
   };
@@ -129,7 +130,7 @@ const ProfilePage = () => {
     id: book._id,
     title: book.title,
     description: `Author: ${book.author}\nDetails: ${book.details}\nRating: ${book.rating}`,
-    link: `#`, // Placeholder link
+    link: `#`,
   }));
 
   return (
@@ -287,6 +288,32 @@ const ProfilePage = () => {
                   placeholder="Details"
                   className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                   required
+                />
+              </LabelInputContainer>
+
+              <LabelInputContainer>
+                <Label htmlFor="fixedPrice">Fixed Price</Label>
+                <Input
+                  id="fixedPrice"
+                  type="number"
+                  value={newBook.fixedPrice}
+                  onChange={(e) =>
+                    setNewBook({ ...newBook, fixedPrice: e.target.value })
+                  }
+                  placeholder="Enter the fixed price"
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  required
+                />
+              </LabelInputContainer>
+
+              <LabelInputContainer>
+                <Label htmlFor="rentalPrice">Rental Price</Label>
+                <Input
+                  id="rentalPrice"
+                  type="number"
+                  value={(newBook.fixedPrice / 2).toFixed(2)} // Automatically set rental price as half of fixed price
+                  readOnly
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
                 />
               </LabelInputContainer>
 

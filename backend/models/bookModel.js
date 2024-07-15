@@ -33,12 +33,20 @@ const bookSchema = new mongoose.Schema({
   genre: {
     type: String,
   },
-  rating: { // Add rating field
+  rating: {
     type: Number,
     required: true,
   },
-  details: { // Add details field
+  details: {
     type: String,
+    required: true,
+  },
+  fixedPrice: { // Add fixedPrice field
+    type: Number,
+    required: true,
+  },
+  rentalPrice: { // Add rentalPrice field
+    type: Number,
     required: true,
   },
 });

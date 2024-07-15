@@ -11,7 +11,6 @@ exports.getBooks = async (req, res) => {
   }
 };
 
-
 // Controller to get a book by ID
 exports.getBookById = async (req, res) => {
   try {
@@ -30,19 +29,29 @@ exports.getBookById = async (req, res) => {
 
 // Controller to create a new book
 exports.createBook = async (req, res) => {
-  const { title, author, rating } = req.body;
+  const { title, author, rating, fixedPrice, details } = req.body;
+  const rentalPrice = (fixedPrice / 2).toFixed(2); // Calculate rental price based on fixed price
+
   try {
     const existingBook = await Book.findOne({ title, author });
     if (existingBook) {
       return res.status(400).json({ message: 'Book already exists' });
     }
 
-    const book = new Book({ ...req.body, owner: req.session.userId });
+    const book = new Book({
+      title,
+      author,
+      rating,
+      fixedPrice,
+      rentalPrice,
+      details,
+      owner: req.session.userId,
+      contactDetails: req.body.contactDetails || {},
+    });
     await book.save();
 
     const user = await User.findById(req.session.userId);
     user.books.push(book._id);
-    user.rating = rating;
     await user.save();
 
     res.status(201).json(book);
@@ -50,6 +59,7 @@ exports.createBook = async (req, res) => {
     res.status(500).json({ message: 'Error creating book', error });
   }
 };
+
 
 // Controller to update book availability
 exports.updateBookAvailability = async (req, res) => {

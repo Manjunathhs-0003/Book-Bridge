@@ -12,6 +12,9 @@ const BuyBookPage = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const { user: currentUser } = useContext(AuthContext);
+  const [purchaseType, setPurchaseType] = useState("buy"); // State for purchase type
+  const [rentalDuration, setRentalDuration] = useState(""); // Rental duration state
+  const [calculatedRentalPrice, setCalculatedRentalPrice] = useState(0); // State to hold the calculated rental price
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -35,6 +38,21 @@ const BuyBookPage = () => {
   useEffect(() => {
     console.log('Book state has changed:', book);
   }, [book]);
+
+  const handlePurchaseTypeChange = (e) => {
+    setPurchaseType(e.target.value);
+    setRentalDuration("");
+    setCalculatedRentalPrice(0);
+  };
+
+  const handleRentalDurationChange = (e) => {
+    const duration = e.target.value;
+    setRentalDuration(duration);
+    if (book && book.book.fixedPrice) {
+      const rentalPrice = (book.book.fixedPrice / 2) * parseInt(duration);
+      setCalculatedRentalPrice(rentalPrice.toFixed(2));
+    }
+  };
 
   if (!book) {
     return <div>Loading...</div>;
@@ -112,7 +130,58 @@ const BuyBookPage = () => {
                 className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
               />
             </LabelInputContainer>
-            
+          </div>
+        </div>
+        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-neutral-900 yatra-one-regular dark:bg-black">
+          <h2 className="font-bold text-xl text-white dark:text-neutral-200">Purchase or Rent</h2>
+          <div className="my-4 space-y-4">
+            <LabelInputContainer>
+              <Label>Do you want to buy or rent?</Label>
+              <select
+                value={purchaseType}
+                onChange={handlePurchaseTypeChange}
+                className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+              >
+                <option value="buy">Buy</option>
+                <option value="rent">Rent</option>
+              </select>
+            </LabelInputContainer>
+
+            {purchaseType === 'buy' && (
+              <LabelInputContainer>
+                <Label>Fixed Price</Label>
+                <Input
+                  type="text"
+                  value={book.book.fixedPrice}
+                  readOnly
+                  className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                />
+              </LabelInputContainer>
+            )}
+
+            {purchaseType === 'rent' && (
+              <>
+                <LabelInputContainer>
+                  <Label>Rental Duration (in months)</Label>
+                  <Input
+                    type="number"
+                    value={rentalDuration}
+                    onChange={handleRentalDurationChange}
+                    placeholder="Enter the duration (e.g., 1 month)"
+                    className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  />
+                </LabelInputContainer>
+                <LabelInputContainer>
+                  <Label>Rental Price</Label>
+                  <Input
+                    type="text"
+                    value={calculatedRentalPrice}
+                    readOnly
+                    className="w-80 p-2 bg-neutral-800 shadow-input text-white border border-gray-600 rounded"
+                  />
+                </LabelInputContainer>
+              </>
+            )}
           </div>
         </div>
       </div>
