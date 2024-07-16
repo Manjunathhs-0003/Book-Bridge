@@ -22,18 +22,18 @@ const NavBar = () => {
     {
       name: "Home",
       link: "/",
-      icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
+      icon: <IconHome className="h-4 w-4 text-neutral-500 yatra-one-regular dark:text-white" />,
     },
     {
       name: "Dashboard",
       link: "/dashboard",
-      icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
+      icon: <IconHome className="h-4 w-4 text-neutral-500 yatra-one-regular dark:text-white" />,
     },
     ...(user ? [
       {
         name: "Profile",
         link: "/profile",
-        icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
+        icon: <IconUser className="h-4 w-4 text-neutral-500 yatra-one-regular dark:text-white" />,
       },
     ] : [])
   ];
