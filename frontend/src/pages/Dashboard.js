@@ -74,7 +74,7 @@ const InfoSection = () => {
                 <ul>
                   <li>Register and log in to start swapping.</li>
                   <li>List the books you want to exchange.</li>
-                  <li>Browse books listed by other users.</li>
+                  <li>Browse books listed by other Traders.</li>
                   <li>Contact users and arrange the swap!</li>
                 </ul>
               </div>
